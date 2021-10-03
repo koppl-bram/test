@@ -1,5 +1,4 @@
 const webpack = require('webpack');
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 
@@ -32,10 +31,6 @@ module.exports = {
         filename: 'bundle.js',
     },
     plugins: [new webpack.HotModuleReplacementPlugin(),
-    new MonacoWebpackPlugin({
-        // available options are documented at https://github.com/Microsoft/monaco-editor-webpack-plugin#options
-        languages: ['javascript']
-    }),
     new webpack.DefinePlugin({
         "process.env": {
             NODE_ENV: JSON.stringify("production")
