@@ -191,7 +191,10 @@ global.endpoint = "https://itility-koppl.azurewebsites.net/api"
             </Flex>
             </Flex>
             <Flex  {...components.components[6].renderProps}>
-                
+               <form style={{...components.components[7].renderProps}}onSubmit={(e)=>{
+                    e.preventDefault();
+                    onClick9({})
+            }}>  
         <FormControl
             {...components.components[7].renderProps}
             isInvalid={components.components[7].renderProps["regex"] && components.components[7].renderProps["value"] ? !components.components[7].renderProps["value"].match(new RegExp(components.components[7].renderProps["regex"], "s")) || (components.components[7].renderProps["isRequired"] && (components.components[7].renderProps["value"] === undefined || components.components[7].renderProps["value"] === "")) : (components.components[7].renderProps["isRequired"] && (components.components[7].renderProps["value"] === undefined || components.components[7].renderProps["value"] === ""))}       
@@ -214,6 +217,7 @@ global.endpoint = "https://itility-koppl.azurewebsites.net/api"
       />
       <FormErrorMessage>{components.components[7].renderProps["errorMessage"]}</FormErrorMessage>
     </FormControl>
+</form
             <Flex  {...components.components[8].renderProps}>
                 
         <Button  {...components.components[9].renderProps} onClick={()=>{onClick9({})}}>
