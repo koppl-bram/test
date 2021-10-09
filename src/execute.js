@@ -1,4 +1,5 @@
 
+
 import { ToastNode } from "./nodes/ToastNode";
 import { SetRenderPropNode } from "./nodes/SetRenderPropNode";
 import { GoToPageNode } from "./nodes/GoToPageNode"
@@ -68,14 +69,14 @@ async function executeNode(initialItems, data, items, setComponents, toast, hist
         return new SetRenderPropNode().executeProduction(parseParameters(newParams, items, initialItems, param), items, setComponents)
     }
     if (data.name === "ui_get") {
-        return new GetRenderPropNode().executeProduction(parseParameters(newParams, items, initialItems), items, setComponents)
+        return new GetRenderPropNode().executeProduction(parseParameters(newParams, items, initialItems, param), items, setComponents)
     }
     if (data.name === "ui_page") {
-        return new GoToPageNode().executeProduction(parseParameters(newParams, items, initialItems), items, history)
+        return new GoToPageNode().executeProduction(parseParameters(newParams, items, initialItems, param), items, history)
     }
     if (data.name === "ui_execute_workflow") {
         let executionflow = new ExecuteWorkflowNode()
-        let tmp = await executionflow.execute(parseParameters(newParams, items, initialItems), items, initialItems)
+        let tmp = await executionflow.execute(parseParameters(newParams, items, initialItems, param), items, initialItems, param)
         return tmp;
     }
     if (data.name === "ui_refresh") {
@@ -120,7 +121,8 @@ function listEvaluate(currentItem, initialItems, variables, variable, propertyCo
         }
         if (typeof newVar === "string" && typeof propertyCopy === "string") {
             return propertyCopy.replace(variables[variable], newVar);
-
+        } else if (typeof newVar === "number" && typeof propertyCopy === "string") {
+            return propertyCopy.replace(variables[variable], newVar);
         } else if (typeof propertyCopy === "number") {
             return newVar;
         } else {
@@ -139,6 +141,7 @@ function listEvaluate(currentItem, initialItems, variables, variable, propertyCo
 }
 
 function evaluate(currentItem, initialItems, variables, variable, propertyCopy, param) {
+    console.log(propertyCopy)
     try {
         let newVar = undefined;
         if (variables[variable]
@@ -164,6 +167,8 @@ function evaluate(currentItem, initialItems, variables, variable, propertyCopy, 
         if (typeof newVar === "string" && typeof propertyCopy === "string") {
             return propertyCopy.replace(variables[variable], newVar);
 
+        } else if (typeof newVar === "number" && typeof propertyCopy === "string") {
+            return propertyCopy.replace(variables[variable], newVar);
         } else if (typeof propertyCopy === "number") {
             return newVar;
         } else {
@@ -204,16 +209,20 @@ function parseListData(parameters, items, param) {
 
 function parseParameters(parameters, items, initialItems, param) {
     const newParameters = [];
+    console.log(parameters)
     if (items["main"]) {
         for (const item in items["main"]) {
             newParameters.push({});
             for (const property in parameters) {
                 if (typeof parameters[property] === "string") {
+                    console.log("is string")
                     let propertyCopy = parameters[property].slice();
                     if (propertyCopy !== undefined) {
                         let variables = propertyCopy.match(/{{s?.*?s?}}/g);
                         for (let variable in variables) {
+                            console.log(variables[variable])
                             propertyCopy = evaluate(items["main"][item], initialItems, variables, variable, propertyCopy, param);
+                            console.log(propertyCopy)
                         }
                     }
                     newParameters[item][property] = propertyCopy;
