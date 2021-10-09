@@ -59,7 +59,7 @@ import {
 } from '@chakra-ui/react'
 import { GoogleLogin } from "react-google-login"
 import MicrosoftLogin from 'react-microsoft-login';
-global.endpoint = "http://localhost:8080/api"
+global.endpoint = "https://itility-koppl.azurewebsites.net/api"
 
 const App = (props) => {
     return <ChakraProvider style={{ backgroundColor: "#FCFCFC" }}>
