@@ -217,7 +217,7 @@ global.endpoint = "https://itility-koppl.azurewebsites.net/api"
       />
       <FormErrorMessage>{components.components[7].renderProps["errorMessage"]}</FormErrorMessage>
     </FormControl>
-</form
+</form>
             <Flex  {...components.components[8].renderProps}>
                 
         <Button  {...components.components[9].renderProps} onClick={()=>{onClick9({})}}>
